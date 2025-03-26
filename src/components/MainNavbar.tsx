@@ -5,15 +5,6 @@ import {
   History 
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
 
 // Navigation menu items
 const navItems = [
@@ -38,33 +29,24 @@ const MainNavbar = () => {
   const location = useLocation();
   
   return (
-    <Sidebar 
-      variant="floating" 
-      className="left-4 top-1/2 -translate-y-1/2 fixed"
-    >
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    asChild 
-                    isActive={location.pathname === item.path}
-                    tooltip={item.title}
-                  >
-                    <Link to={item.path}>
-                      <item.icon className="mr-2" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+      <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full px-6 py-3 shadow-sm border border-border">
+        {navItems.map((item) => (
+          <Link
+            key={item.title}
+            to={item.path}
+            className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${
+              location.pathname === item.path
+                ? "text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <item.icon className="h-4 w-4" />
+            <span>{item.title}</span>
+          </Link>
+        ))}
+      </div>
+    </nav>
   );
 };
 
