@@ -38,7 +38,7 @@ const MainNavbar = () => {
   const location = useLocation();
   
   return (
-    <Sidebar>
+    <Sidebar variant="floating">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
