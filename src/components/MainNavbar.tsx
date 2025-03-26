@@ -38,7 +38,10 @@ const MainNavbar = () => {
   const location = useLocation();
   
   return (
-    <Sidebar variant="floating">
+    <Sidebar 
+      variant="floating" 
+      className="left-4 top-1/2 -translate-y-1/2 fixed"
+    >
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
