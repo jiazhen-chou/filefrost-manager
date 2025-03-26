@@ -4,6 +4,8 @@ import FileUpload from '@/components/FileUpload';
 import FileList, { FileItem } from '@/components/FileList';
 import FileDetails from '@/components/FileDetails';
 import { useToast } from '@/hooks/use-toast';
+import MainNavbar from '@/components/MainNavbar';
+import { SidebarInset } from '@/components/ui/sidebar';
 
 const generateUniqueId = () => {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -95,47 +97,50 @@ const Index = () => {
   }, [files, toast]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="animate-slide-down">
-            <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-2">
-              File Storage
+    <div className="flex min-h-screen bg-background">
+      <MainNavbar />
+      <SidebarInset>
+        <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="animate-slide-down">
+              <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-2">
+                File Storage
+              </div>
+              <h1 className="text-3xl font-semibold tracking-tight">文件管理</h1>
+              <p className="text-muted-foreground mt-1">上传、管理和组织您的文件</p>
             </div>
-            <h1 className="text-3xl font-semibold tracking-tight">File Manager</h1>
-            <p className="text-muted-foreground mt-1">Upload, manage, and organize your files</p>
+            
+            {files.length > 0 && (
+              <button
+                onClick={handleDeleteAll}
+                className="text-sm text-destructive hover:text-destructive/80 transition-colors animate-fade-in"
+              >
+                Delete All Files
+              </button>
+            )}
           </div>
-          
-          {files.length > 0 && (
-            <button
-              onClick={handleDeleteAll}
-              className="text-sm text-destructive hover:text-destructive/80 transition-colors animate-fade-in"
-            >
-              Delete All Files
-            </button>
-          )}
-        </div>
-      </header>
+        </header>
 
-      <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="grid gap-6">
-          <FileUpload onFilesAdded={handleFilesAdded} />
-          
-          <FileList 
-            files={files} 
-            onViewFile={handleViewFile} 
-            onDeleteFile={handleDeleteFile} 
+        <main className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <div className="grid gap-6">
+            <FileUpload onFilesAdded={handleFilesAdded} />
+            
+            <FileList 
+              files={files} 
+              onViewFile={handleViewFile} 
+              onDeleteFile={handleDeleteFile} 
+            />
+          </div>
+        </main>
+
+        {selectedFile && (
+          <FileDetails
+            file={selectedFile}
+            onClose={handleCloseFileDetails}
+            onDeleteFile={handleDeleteFile}
           />
-        </div>
-      </main>
-
-      {selectedFile && (
-        <FileDetails
-          file={selectedFile}
-          onClose={handleCloseFileDetails}
-          onDeleteFile={handleDeleteFile}
-        />
-      )}
+        )}
+      </SidebarInset>
     </div>
   );
 };
